@@ -1,0 +1,32 @@
+const database = require("./database-connection");
+
+module.exports = {
+    list() {
+      return database('games')
+    },
+    read(id) {
+      return database('games')
+            .select('*')
+            .where('id', id)
+            .first();
+    },
+    create(game) {
+      return database('games')
+            .insert(game)
+            .returning('*')
+            .then(game => game[0])
+    },
+    update(id, game) {
+      return database('games')
+            .update(game)
+            .where('id', id)
+            .returning('*')
+            .then(coffee => coffee[0])
+    },
+    delete(id) {
+      return database('games')
+            .select('*')
+            .where('id', id)
+            .del()
+    }
+};
